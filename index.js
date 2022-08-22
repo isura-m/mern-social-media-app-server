@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -6,14 +7,13 @@ import postRoutes from "./routes/posts.js";
 
 const app = express();
 
-app.use("/posts", postRoutes);
-
 app.use(bodyParser.json({ limit: "30mb", extend: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-const CONNECTION_URL =
-  "mongodb+srv://tasaprojects:tasaprojects123@cluster0.9acoqvy.mongodb.net/?retryWrites=true&w=majority";
+app.use("/posts", postRoutes);
+
+const CONNECTION_URL = process.env.MONGODB_CONNECTION_STRING;
 const PORT = process.env.PORT || 5000;
 
 mongoose
